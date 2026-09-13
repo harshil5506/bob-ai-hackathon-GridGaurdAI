@@ -9,51 +9,47 @@
 # =============================================================================
 
 team:
-  name: ""                             # REQUIRED — e.g., "Orion Squad"
-  track: ""                            # REQUIRED — one of: AI | DevOps | Sustainability | Open
+  name: "GridGuard AI"                  # REQUIRED — e.g., "GridGuard AI"
+  track: "AI"                           # REQUIRED — one of: AI | DevOps | Sustainability | Open
   lead:
-    name: ""                           # REQUIRED — e.g., "Alice Chen"
-    email: ""                          # REQUIRED — e.g., "alice.chen@ibm.com"
+    name: "Harshil Thakkar"                   # REQUIRED — Team Lead Name
+    email: "d25dit083@charusat.edu.in"     # REQUIRED — Team Lead Email
   members:
-    - name: ""                         # REQUIRED — Team member 1
-      email: ""
-    - name: ""                         # Add more members by copying the two lines above
-      email: ""
-    - name: ""
-      email: ""
+    - name: "Priyal Rathod"             # REQUIRED — Team member 1
+      email: "24dce119@charusat.edu.in"
+    - name: "Rutvik Jasani"             # Team member 2 (or delete if solo)
+      email: "24dce048@charusat.edu.in"
+    - name: "Hetavi Suhagiya"             # Team member 3 (or delete if not applicable)
+      email: "24dce140@charusat.edu.in"
 
 submission:
-  title: ""                            # REQUIRED — Project display name, e.g., "SmartOps Dashboard"
+  title: "GridGuard AI - Power Outage Prediction & Grid Equipment Failure Advisor"   # REQUIRED
 
   problem_statement: >                 # REQUIRED — 1-3 sentences. What problem? Who has it?
-    Replace this text with a concise description of the real-world problem
-    your project addresses and who experiences it.
+    Power transformer and substation failures cause blackouts costing electric utilities over $1M/hour while affecting millions of citizens. Most utilities still rely on calendar-based maintenance, leaving early failure signatures in sensor data (temperature, vibration, partial discharge, oil quality) unlinked with compounding weather events until it is too late to prevent outages.
 
   solution_summary: >                  # REQUIRED — 1-3 sentences. What did you build?
-    Replace this text with a clear description of your solution
-    and how it addresses the problem above.
+    GridGuard AI is a predictive grid resilience solution built on IBM Bob and watsonx.ai that fuses asset health telemetry, live weather forecasts, and historical incident records. It detects early equipment degradation, ranks assets by grid impact severity, and automatically generates prioritized maintenance plans with proactive crew pre-positioning before outages occur.
 
   key_features:                        # REQUIRED — List 3 to 5 specific features you implemented
-    - ""                               # e.g., "Real-time pipeline anomaly detection using watsonx.ai"
-    - ""
-    - ""
-    - ""                               # optional 4th
-    - ""                               # optional 5th
+    - "Multi-Modal Telemetry Fusion: Ingests and correlates IoT sensor data (temperature, vibration, partial discharge, oil quality) with live weather forecasts and historical incident records"
+    - "Predictive Failure Detection: Identifies early asset degradation signatures weeks in advance to forecast outage-prone areas and at-risk equipment"
+    - "Grid Impact Severity Ranking: Evaluates and ranks critical substation and transformer assets based on failure likelihood and downstream grid disruption"
+    - "Prioritised Maintenance & Crew Pre-Positioning: Generates actionable work orders and optimizes field crew deployment schedules ahead of severe weather events"
+    - "Interactive Bob Grid Advisor: Conversational AI advisor powered by IBM Bob to deliver real-time risk explanations, health diagnostics, and incident playbooks to grid operators"
 
   tech_stack:
-    languages: []                      # REQUIRED — e.g., ["Python", "TypeScript"]
-    frameworks: []                     # e.g., ["FastAPI", "React"]
-    ibm_technologies: []               # e.g., ["watsonx.ai", "IBM Bob", "IBM Cloud Functions"]
-    databases: []                      # e.g., ["PostgreSQL", "Redis"]
-    other: []                          # e.g., ["Docker", "GitHub Actions", "Slack API"]
+    languages: ["Python", "TypeScript"]                     # REQUIRED
+    frameworks: ["FastAPI", "React", "scikit-learn"]
+    ibm_technologies: ["IBM Bob", "watsonx.ai", "IBM Cloud Code Engine"]
+    databases: ["PostgreSQL", "TimescaleDB"]
+    other: ["Docker", "Open-Meteo API", "GitHub Actions"]
 
   what_we_are_most_proud_of: >         # Optional but recommended — guides judges to your best work
-    Replace with what aspect of the submission you consider strongest
-    and want judges to pay special attention to.
+    The holistic fusion of real-time multi-sensor telemetry with weather forecast risk modeling, transforming utility maintenance from reactive calendar schedules into automated, predictive crew pre-positioning that protects critical grid infrastructure.
 
   known_limitations: >                 # Optional but recommended — be honest about gaps
-    Replace with any known limitations, incomplete features,
-    or shortcuts taken due to time constraints.
+    Sensor streams and weather feeds are currently modeled using realistic synthetic utility telemetry distributions; direct physical SCADA and hardware edge sensor interfacing is emulated via REST endpoints.
 
 # =============================================================================
 # ARTIFACT LOCATIONS
