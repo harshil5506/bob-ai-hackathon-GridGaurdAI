@@ -1,6 +1,6 @@
-# 🚀 [Your Project Title Here]
+# ⚡ GridGuard AI: Power Outage Prediction & Grid Equipment Failure Advisor
 
-> ⚠️ **Replace everything in `[ ]` brackets with your actual content before submission.**
+> Proactive grid resilience and predictive maintenance powered by IBM Bob and watsonx.ai.
 
 ---
 
@@ -8,36 +8,36 @@
 
 | Field | Value |
 |---|---|
-| **Team Name** | [Your Team Name] |
-| **Track** | [AI / DevOps / Sustainability / Open] |
-| **Team Lead** | [Name] — [email@ibm.com] |
-| **Members** | [Name 1], [Name 2], [Name 3] |
+| **Team Name** | GridGuard AI |
+| **Track** | AI |
+| **Team Lead** | Harshil Thakkar — d25dit083@charusat.edu.in |
+| **Members** | Priyal Rathod, Rutvik Jasani, Hetavi Suhagiya |
 
 ---
 
 ## 🎯 Problem Statement
 
-> In 2–3 sentences: What problem does your project solve? Who experiences this problem?
+Power transformer and substation failures cause catastrophic blackouts costing electric utilities upwards of **$1M+/hour** while impacting millions of citizens and critical infrastructure. 
 
-[Describe the real-world problem your project addresses. Be specific about who the user is and what pain point they face.]
+Most electric utilities still rely on calendar-based maintenance cycles. Although installed IoT sensors continuously measure temperature, vibration, partial discharge, and oil quality, these early failure signatures are never synthesized with compounding severe weather forecasts and historical incident records in time to take preventative action.
 
 ---
 
 ## 💡 Solution
 
-> In 2–3 sentences: What did you build? How does it solve the problem above?
+**GridGuard AI** is an intelligent grid reliability and failure prediction advisor built on **IBM Bob** and **watsonx.ai**.
 
-[Describe your solution clearly. Explain the core mechanism — what makes it work.]
+The platform ingests real-time asset health telemetry, correlates it with live weather forecasts, and cross-references historical failure records. It forecasts outage-prone areas and at-risk equipment weeks in advance, calculates grid impact severity scores, and automatically generates prioritized work orders with optimal field crew pre-positioning plans before severe events occur.
 
 ---
 
 ## ✨ Key Features
 
-- **Feature 1:** [Brief description — e.g., "Real-time anomaly detection using watsonx.ai"]
-- **Feature 2:** [Brief description]
-- **Feature 3:** [Brief description]
-- **Feature 4:** [Optional]
-- **Feature 5:** [Optional]
+- **Multi-Modal Telemetry & Weather Fusion:** Ingests and continuously correlates IoT sensor data (temperature, vibration, partial discharge, oil quality) with live weather forecasts and historical outage logs.
+- **Predictive Equipment Failure Forecasting:** Detects subtle asset degradation signatures weeks in advance using machine learning anomaly models to pinpoint at-risk substations and transformers.
+- **Grid Impact Severity Ranking:** Evaluates downline impact, customer density, and cascading risk to prioritize assets that represent the highest threat to grid stability.
+- **Automated Maintenance & Crew Pre-Positioning:** Automatically generates prioritized maintenance tickets and suggests field crew staging locations prior to severe weather storms.
+- **Interactive IBM Bob Grid Advisor:** Conversational AI advisor providing grid dispatchers and operations engineers with real-time risk alerts, root-cause explanations, and actionable mitigation playbooks.
 
 ---
 
@@ -45,11 +45,11 @@
 
 | Category | Technologies |
 |---|---|
-| **Languages** | [e.g., Python, TypeScript] |
-| **Frameworks** | [e.g., FastAPI, React] |
-| **IBM Technologies** | [e.g., watsonx.ai, IBM Bob, IBM Cloud] |
-| **Databases** | [e.g., PostgreSQL, Redis] |
-| **Other** | [e.g., Docker, GitHub Actions] |
+| **Languages** | Python 3.11+, TypeScript |
+| **Frameworks** | FastAPI, React / Vite, scikit-learn |
+| **IBM Technologies** | IBM Bob, watsonx.ai, IBM Cloud Code Engine |
+| **Databases** | PostgreSQL, TimescaleDB |
+| **Other** | Docker, Open-Meteo API, GitHub Actions |
 
 ---
 
@@ -73,22 +73,24 @@
 
 ## ⚡ How to Run
 
-> **Copy these exact steps from your [`docs/setup-guide.md`](docs/setup-guide.md)**
+> **For complete details, see [`docs/setup-guide.md`](docs/setup-guide.md)**
 
 ```bash
 # 1. Clone the repo
-git clone https://github.com/[your-repo].git
-cd [your-repo]
-
-# 2. Install dependencies
-[your install command here]
-
-# 3. Configure environment
-cp .env.example .env
-# Edit .env with your values
-
+git clone https://github.com/harshil5506/bob-ai-hackathon-GridGaurdAI.git
+cd bob-ai-hackathon-GridGaurdAI
+# 2. Configure environment
+cp src/.env.example src/.env
+# Edit src/.env with your API keys (e.g. WATSONX_API_KEY, PROJECT_ID)
+# 3. Install dependencies
+# Backend:
+cd src
+pip install -r requirements.txt
+# Frontend (if applicable):
+# cd ../frontend && npm install
 # 4. Run the project
-[your run command here]
+uvicorn main:app --reload
+
 ```
 
 ---
@@ -105,17 +107,14 @@ cp .env.example .env
 ---
 
 ## ⚠️ Known Limitations
-
-> Be honest — judges appreciate transparency over overclaiming.
-
-- [Limitation 1: e.g., "Authentication is mocked — not production-ready"]
-- [Limitation 2: e.g., "Only tested on Chrome"]
-- [Limitation 3: e.g., "Feature X is scaffolded but not fully implemented"]
+Sensor Emulation: Asset health telemetry and weather feeds are generated using realistic utility distribution benchmarks; physical SCADA interfaces are simulated via REST endpoints.
+Grid Topology Scope: Current prototype focuses on transmission and high-voltage substation transformer clusters rather than low-voltage residential distribution lines.
+Crew Routing: Dispatch pre-positioning suggestions are cluster-based and do not yet integrate with live commercial traffic routing systems.
 
 ---
 
 ## 🏅 What We're Most Proud Of
 
-[Tell the judges what part of your submission is strongest and worth paying close attention to.]
+The proactive fusion of multi-sensor degradation signals with hyper-local weather risk modeling, enabling grid operators to transition from reactive calendar schedules to predictive crew pre-positioning before costly outages occur.
 
 ---
