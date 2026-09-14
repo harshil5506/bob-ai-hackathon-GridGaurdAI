@@ -1,4 +1,5 @@
 import React from 'react';
+import { Dashboard } from './views/Dashboard';
 
 function App() {
   return (
@@ -8,10 +9,7 @@ function App() {
         <p>Power Outage Prediction & Advisor</p>
       </header>
       <main className="app-main">
-        <div className="dashboard-placeholder">
-          <h2>Dashboard Overview</h2>
-          <p>System initialized successfully.</p>
-        </div>
+        <Dashboard />
       </main>
     </div>
   );
