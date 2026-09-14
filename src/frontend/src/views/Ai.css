@@ -1,0 +1,18 @@
+.ai-view-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.ai-full-panel-container {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure BobPanel takes up the full space */
+.ai-full-panel-container .bob-panel-container {
+  height: 100%;
+  flex: 1;
+}

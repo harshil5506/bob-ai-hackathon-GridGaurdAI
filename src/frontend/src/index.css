@@ -1,17 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
 :root {
-  --bg-primary: #0f111a;
-  --bg-secondary: #1a1d2d;
-  --bg-tertiary: #252a41;
-  --text-primary: #e2e8f0;
-  --text-secondary: #94a3b8;
-  --accent-color: #3b82f6;
-  --accent-hover: #2563eb;
-  --danger-color: #ef4444;
-  --warning-color: #f59e0b;
-  --success-color: #10b981;
-  --border-color: rgba(255, 255, 255, 0.1);
-  --glass-bg: rgba(26, 29, 45, 0.7);
-  --glass-border: rgba(255, 255, 255, 0.05);
+  --bg-primary: #020611;
+  --bg-secondary: rgba(10, 20, 40, 0.7);
+  --bg-tertiary: rgba(15, 30, 60, 0.5);
+  --text-primary: #e0f7fa;
+  --text-secondary: #80deea;
+  --text-muted: #4f8a95;
+  --accent-cyan: #00f3ff;
+  --accent-green: #00ff66;
+  --accent-orange: #ffaa00;
+  --accent-red: #ff3333;
+  
+  --hud-border: 1px solid rgba(0, 243, 255, 0.4);
+  --hud-border-glow: 0 0 12px rgba(0, 243, 255, 0.2);
+  --hud-panel-bg: linear-gradient(135deg, rgba(10, 20, 40, 0.85) 0%, rgba(5, 10, 20, 0.6) 100%);
 }
 
 * {
@@ -21,66 +24,142 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Share Tech Mono', monospace;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  line-height: 1.5;
+  line-height: 1.4;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .app-container {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.app-header {
-  padding: 1.5rem 2rem;
-  background: var(--glass-bg);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--border-color);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.header-nav {
-  display: flex;
-  gap: 1.5rem;
-}
-
-.nav-link {
-  color: var(--text-secondary);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
-}
-
-.nav-link:hover {
-  color: var(--text-primary);
-}
-
-.app-header h1 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(90deg, #60a5fa, #a78bfa);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 10;
 }
 
 .app-main {
   flex: 1;
   padding: 2rem;
-  max-width: 1400px;
+  max-width: 1600px;
   margin: 0 auto;
   width: 100%;
+  position: relative;
+  z-index: 10;
+  padding-bottom: 120px; /* Leave room for bottom nav */
 }
 
-.dashboard-placeholder {
+/* Base HUD Panel Style */
+.hud-panel {
+  background: var(--hud-panel-bg);
+  border: var(--hud-border);
+  box-shadow: var(--hud-border-glow);
+  padding: 1.25rem;
+  backdrop-filter: blur(10px);
+  position: relative;
+  /* Angular sci-fi corners */
+  clip-path: polygon(
+    0 15px,
+    15px 0,
+    100% 0,
+    100% calc(100% - 15px),
+    calc(100% - 15px) 100%,
+    0 100%
+  );
+  transition: all 0.3s ease;
+}
+
+.hud-panel::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.1);
+  pointer-events: none;
+}
+
+/* Bottom HUD Navigation */
+.hud-bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 1rem;
+  z-index: 50;
+  background: linear-gradient(to top, rgba(2, 6, 17, 1) 0%, rgba(2, 6, 17, 0) 100%);
+}
+
+.nav-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
   background: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 2rem;
-  text-align: center;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(0, 243, 255, 0.3);
+  padding: 0 1.5rem;
+  border-radius: 40px;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.15);
+}
+
+.nav-link {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 1.1rem;
+  letter-spacing: 0.1em;
+  padding: 0.75rem 1rem;
+  text-transform: uppercase;
+  transition: all 0.2s;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.nav-link:hover, .nav-link.active {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 8px var(--accent-cyan);
+  border-bottom: 2px solid var(--accent-cyan);
+}
+
+.run-sim-btn {
+  background: transparent;
+  border: 1px solid var(--accent-cyan);
+  color: var(--accent-cyan);
+  padding: 0.75rem 2rem;
+  font-family: inherit;
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+  cursor: pointer;
+  box-shadow: inset 0 0 15px rgba(0, 243, 255, 0.2);
+  transition: all 0.3s;
+  margin: 0 1rem;
+}
+
+.run-sim-btn:hover {
+  background: rgba(0, 243, 255, 0.1);
+  box-shadow: inset 0 0 25px rgba(0, 243, 255, 0.5), 0 0 15px rgba(0, 243, 255, 0.4);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 243, 255, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 243, 255, 0.5);
 }

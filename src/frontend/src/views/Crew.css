@@ -1,0 +1,21 @@
+.crew-view-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 1.5rem;
+}
+
+.crew-content {
+  display: flex;
+  gap: 1.5rem;
+  flex: 1;
+  min-height: 0;
+}
+
+.crew-ai-panel {
+  width: 400px;
+}
+
+.bg-orange-dim {
+  background-color: rgba(255, 170, 0, 0.1);
+}
