@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getAssets, getRiskResult } from '../services/api';
 import { Asset, RiskResult } from '../types';
 import { RiskBadge } from '../components/RiskBadge';
@@ -121,7 +122,7 @@ export const Dashboard: React.FC = () => {
                       {risk ? <RiskBadge level={risk.risk_level} /> : <span className="text-secondary">Pending...</span>}
                     </td>
                     <td>
-                      <button className="btn-secondary">View Details</button>
+                      <Link to={`/asset/${asset.asset_id}`} className="btn-secondary">View Details</Link>
                     </td>
                   </tr>
                 );
