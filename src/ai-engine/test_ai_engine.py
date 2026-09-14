@@ -209,6 +209,54 @@ class TestAIEngine(unittest.TestCase):
         self.assertEqual(top_rec["staging_location"]["name"], "Central Metro Depot")
         self.assertIn("justification", top_rec)
 
+    def test_stable_python_callable_interfaces(self):
+        """Verify programmatic analyze_grid and score_single_asset functions."""
+        try:
+            from __init__ import analyze_grid, score_single_asset
+        except (ImportError, ValueError):
+            from .__init__ import analyze_grid, score_single_asset
+
+        # Test analyze_grid bulk callable
+        result = analyze_grid(
+            assets=[self.sample_asset_transformer, self.sample_asset_breaker],
+            sensors=[],
+            weather=[],
+            incidents=[]
+        )
+        self.assertIn("risk_results", result)
+        self.assertIn("maintenance_recommendations", result)
+        self.assertEqual(result["total_analyzed"], 2)
+
+        # Test score_single_asset with only elevated sensor (calm weather & clean history)
+        single_res = score_single_asset(
+            asset=self.sample_asset_transformer,
+            latest_sensors={"temperature_c": 95.0, "oil_quality_index": 0.30},
+        )
+        self.assertIn("risk_result", single_res)
+        self.assertGreater(single_res["risk_result"]["risk_score"], 0.40)
+
+        # Test score_single_asset with multi-factor risk alignment (severe sensor + severe weather)
+        multi_factor_res = score_single_asset(
+            asset=self.sample_asset_transformer,
+            latest_sensors={
+                "temperature_c": 95.0,
+                "vibration_mm_s": 6.5,
+                "partial_discharge_pc": 280.0,
+                "oil_quality_index": 0.25,
+                "load_pct": 105.0,
+            },
+            weather_forecasts=[
+                {"location_lat": 28.62, "location_lng": 77.21, "storm_probability": 0.90, "wind_kph": 75.0}
+            ],
+            incident_history=[
+                {"incident_date": date.today().isoformat(), "customers_affected": 20000}
+            ]
+        )
+        self.assertIn(multi_factor_res["risk_result"]["risk_level"], ["HIGH", "CRITICAL"])
+        self.assertIsNotNone(multi_factor_res["maintenance_recommendation"])
+
+
 
 if __name__ == "__main__":
     unittest.main()
+
