@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { getAsset, getWeather, getRiskResult } from '../services/api';
-import { Asset, WeatherContext, RiskResult } from '../types';
+import { getAsset, getWeather, getRiskResult, getRecommendation } from '../services/api';
+import { Asset, WeatherContext, RiskResult, Recommendation } from '../types';
 import { RiskBadge } from '../components/RiskBadge';
 import { TelemetryChart } from '../components/TelemetryChart';
+import { BobPanel } from '../components/BobPanel';
+import { RecommendationCard } from '../components/RecommendationCard';
 import { ArrowLeft, Thermometer, Activity, Zap, Droplets, CloudLightning, Wind, CloudRain } from 'lucide-react';
 import './AssetDetail.css';
 
@@ -13,6 +15,7 @@ export const AssetDetail: React.FC = () => {
   const [asset, setAsset] = useState<Asset | null>(null);
   const [weather, setWeather] = useState<WeatherContext | null>(null);
   const [risk, setRisk] = useState<RiskResult | null>(null);
+  const [recommendation, setRecommendation] = useState<Recommendation | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Generate mock history data for the charts
@@ -34,13 +37,15 @@ export const AssetDetail: React.FC = () => {
           setAsset(fetchedAsset);
           
           // Fetch parallel dependencies
-          const [fetchedWeather, fetchedRisk] = await Promise.all([
+          const [fetchedWeather, fetchedRisk, fetchedRec] = await Promise.all([
             getWeather(fetchedAsset.location.area),
-            getRiskResult(id)
+            getRiskResult(id),
+            getRecommendation(id)
           ]);
           
           setWeather(fetchedWeather);
           setRisk(fetchedRisk);
+          setRecommendation(fetchedRec);
         }
       } catch (error) {
         console.error("Failed to load asset details", error);
@@ -129,10 +134,18 @@ export const AssetDetail: React.FC = () => {
             <TelemetryChart data={tempHistory} title="Temperature Trend (24h)" dataKey="value" color="#f97316" />
             <TelemetryChart data={pdHistory} title="Partial Discharge Trend (24h)" dataKey="value" color="#ef4444" />
           </div>
+          
+          <div className="bob-section" style={{height: '400px', marginTop: '1rem'}}>
+            <BobPanel />
+          </div>
         </div>
 
         {/* Right Column: Context & Risk Explanation */}
         <div className="context-column">
+          {recommendation && (
+            <RecommendationCard recommendation={recommendation} />
+          )}
+
           {weather && (
             <div className="context-card">
               <h3><CloudLightning size={18} className="inline-icon" /> Weather Context</h3>
