@@ -385,14 +385,33 @@ def analyze_fused_asset(fused: dict) -> dict:
     contributing_factors.append(hist_factor)
     contributing_factors.append(age_factor)
 
+    # 5. Extract primary driver & anomaly flags for explainability and DB ingestion
+    primary_factor = "normal_parameters"
+    if contributing_factors:
+        highest_f = max(contributing_factors, key=lambda f: f.get("score", 0))
+        primary_factor = f"{highest_f.get('factor', 'general')}_{highest_f.get('status', 'elevated')}"
+
+    anomaly_flags = []
+    for f in contributing_factors:
+        if f.get("status") in ("critical", "above_threshold", "overloaded", "severe_storm_incoming", "aging"):
+            anomaly_flags.append(f"{f.get('factor', '').upper()}_{f.get('status', '').upper()}")
+
+    customers = int(asset.get("customers_served") or asset.get("downstream_customers") or 0)
+    financial_exposure = round(customers * 12.5 * risk_score, 2)
+
     return {
         "asset_id": asset_id,
         "asset": asset,
         "risk_score": risk_score,
+        "outage_risk_score": risk_score,
         "risk_level": risk_level,
         "failure_probability_7d": failure_prob_7d,
         "failure_prob_7d": failure_prob_7d,
         "grid_impact_severity": grid_impact,
+        "primary_risk_driver": primary_factor,
+        "anomaly_flags": anomaly_flags,
+        "estimated_financial_exposure_usd_hr": financial_exposure,
+        "model_version": "v1.0.0",
         "component_scores": {
             "sensor_health": round(sensor_score, 3),
             "weather_exposure": round(weather_score, 3),
@@ -406,4 +425,5 @@ def analyze_fused_asset(fused: dict) -> dict:
 def analyze_all_fused(fused_list: list[dict]) -> list[dict]:
     """Run risk analysis on all fused assets."""
     return [analyze_fused_asset(item) for item in fused_list]
+
 
