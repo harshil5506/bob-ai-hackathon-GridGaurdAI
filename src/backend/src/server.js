@@ -27,7 +27,9 @@ app.use('/api/telemetry', telemetryRoutes);
 app.use('/api/weather', weatherRoutes);
 app.use('/api/incidents', incidentsRoutes);
 app.use('/api/risk-assessments', riskRoutes);
+app.use('/api/risk', riskRoutes);
 app.use('/api/recommendations', recommendationsRoutes);
+
 
 // Root Welcome Endpoint
 app.get('/', (req, res) => {
@@ -41,11 +43,12 @@ app.get('/', (req, res) => {
 // Centralized Error Handling
 app.use(errorHandler);
 
-if (process.env.NODE_ENV !== 'test') {
+if (process.env.NODE_ENV !== 'test' && require.main === module) {
   app.listen(PORT, () => {
     console.log(`🚀 GridGuard AI Backend running on http://localhost:${PORT}`);
     console.log(`📡 Healthcheck available at http://localhost:${PORT}/api/health`);
   });
 }
+
 
 module.exports = app;
