@@ -54,7 +54,7 @@ export const AssetDetail: React.FC = () => {
       }
     };
 
-    fetchData();
+    fetchAssetData();
   }, [id]);
 
   if (loading) {
