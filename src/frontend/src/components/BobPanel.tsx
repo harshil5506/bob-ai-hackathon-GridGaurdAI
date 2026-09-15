@@ -29,35 +29,40 @@ export const BobPanel: React.FC = () => {
     try {
       const lowerInput = userMsg.toLowerCase();
       let bobReply = "I am monitoring the grid. Ask me about 'risks', 'recommendations', or 'weather' for specific insights.";
+      const backendUrl = (import.meta as any).env?.VITE_API_URL || 'https://backend-omega-ten-80.vercel.app';
       
       // Fetch dynamic data based on keywords
-      if (lowerInput.includes('risk') || lowerInput.includes('critical') || lowerInput.includes('status')) {
-        const res = await fetch('http://localhost:5000/api/risk-assessments');
-        const data = await res.json();
-        if (data.success && data.data && data.data.length > 0) {
-          const topRisk = data.data[0];
-          bobReply = `The highest risk asset is currently ${topRisk.asset_name} (${topRisk.asset_id}) with a risk score of ${topRisk.outage_risk_score}. The primary risk driver is: ${topRisk.primary_risk_driver}.`;
-        } else {
-          bobReply = "Currently, there are no critical risk assessments in the database.";
+      try {
+        if (lowerInput.includes('risk') || lowerInput.includes('critical') || lowerInput.includes('status')) {
+          const res = await fetch(`${backendUrl}/api/risk-assessments`);
+          const data = await res.json();
+          if (data.success && data.data && data.data.length > 0) {
+            const topRisk = data.data[0];
+            bobReply = `The highest risk asset is currently ${topRisk.asset_name} (${topRisk.asset_id}) with a risk score of ${topRisk.outage_risk_score}. The primary risk driver is: ${topRisk.primary_risk_driver}.`;
+          } else {
+            bobReply = "Currently, there are no critical risk assessments in the database.";
+          }
+        } else if (lowerInput.includes('recommend') || lowerInput.includes('crew') || lowerInput.includes('action') || lowerInput.includes('fix')) {
+          const res = await fetch(`${backendUrl}/api/recommendations`);
+          const data = await res.json();
+          if (data.success && data.data && data.data.length > 0) {
+            const topRec = data.data[0];
+            bobReply = `Recommendation for ${topRec.asset_name}: ${topRec.recommended_action}. ${topRec.bob_reasoning_summary} Required crew: ${topRec.crew_type_required}.`;
+          } else {
+            bobReply = "I don't have any immediate maintenance recommendations at this time.";
+          }
+        } else if (lowerInput.includes('weather') || lowerInput.includes('storm') || lowerInput.includes('lightning')) {
+          const res = await fetch(`${backendUrl}/api/weather/alerts`);
+          const data = await res.json();
+          if (data.success && data.data && data.data.length > 0) {
+            const topAlert = data.data[0];
+            bobReply = `There is a ${topAlert.storm_alert_level} weather alert for ${topAlert.substation_name}. Wind gusts up to ${topAlert.wind_gust_kmh} km/h are expected.`;
+          } else {
+            bobReply = "There are no severe weather alerts active at this time.";
+          }
         }
-      } else if (lowerInput.includes('recommend') || lowerInput.includes('crew') || lowerInput.includes('action') || lowerInput.includes('fix')) {
-        const res = await fetch('http://localhost:5000/api/recommendations');
-        const data = await res.json();
-        if (data.success && data.data && data.data.length > 0) {
-          const topRec = data.data[0];
-          bobReply = `Recommendation for ${topRec.asset_name}: ${topRec.recommended_action}. ${topRec.bob_reasoning_summary} Required crew: ${topRec.crew_type_required}.`;
-        } else {
-          bobReply = "I don't have any immediate maintenance recommendations at this time.";
-        }
-      } else if (lowerInput.includes('weather') || lowerInput.includes('storm') || lowerInput.includes('lightning')) {
-        const res = await fetch('http://localhost:5000/api/weather/alerts');
-        const data = await res.json();
-        if (data.success && data.data && data.data.length > 0) {
-          const topAlert = data.data[0];
-          bobReply = `There is a ${topAlert.storm_alert_level} weather alert for ${topAlert.substation_name}. Wind gusts up to ${topAlert.wind_gust_kmh} km/h are expected.`;
-        } else {
-          bobReply = "There are no severe weather alerts active at this time.";
-        }
+      } catch (err) {
+        console.warn('Backend fetch fallback:', err);
       }
       
       setTimeout(() => {

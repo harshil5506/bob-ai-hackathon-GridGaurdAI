@@ -77,10 +77,12 @@ desktop.ini
 *.sublime-workspace
 
 # ── Large Media Files (use demo-video-link.txt instead) ───────────────────────
-demo/*.mp4
-demo/*.mov
-demo/*.avi
-demo/*.mkv
+*.mp4
+*.mov
+*.avi
+*.mkv
+~$*
+.vercel/
 
 # ── Docker volumes / local data ───────────────────────────────────────────────
 data/
