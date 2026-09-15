@@ -1,5 +1,4 @@
-import React from 'react';
-import { Truck, MapPin, CheckCircle2, Clock } from 'lucide-react';
+import { Truck, MapPin } from 'lucide-react';
 import './Crew.css';
 
 export const Crew: React.FC = () => {

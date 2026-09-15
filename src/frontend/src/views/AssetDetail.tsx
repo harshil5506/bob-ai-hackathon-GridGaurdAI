@@ -6,7 +6,7 @@ import { RiskBadge } from '../components/RiskBadge';
 import { TelemetryChart } from '../components/TelemetryChart';
 import { BobPanel } from '../components/BobPanel';
 import { RecommendationCard } from '../components/RecommendationCard';
-import { ArrowLeft, Thermometer, Activity, Zap, Droplets, CloudLightning, Wind, CloudRain, ShieldAlert, History, Users, Clock } from 'lucide-react';
+import { ArrowLeft, Thermometer, Activity, Zap, Droplets, CloudLightning, Wind, ShieldAlert, History, Users, Clock } from 'lucide-react';
 import './AssetDetail.css';
 
 export const AssetDetail: React.FC = () => {

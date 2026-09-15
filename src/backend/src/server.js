@@ -12,6 +12,7 @@ const weatherRoutes = require('./routes/weather');
 const incidentsRoutes = require('./routes/incidents');
 const riskRoutes = require('./routes/riskAssessments');
 const recommendationsRoutes = require('./routes/recommendations');
+const chatRoutes = require('./routes/chat');
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -29,6 +30,7 @@ app.use('/api/incidents', incidentsRoutes);
 app.use('/api/risk-assessments', riskRoutes);
 app.use('/api/risk', riskRoutes);
 app.use('/api/recommendations', recommendationsRoutes);
+app.use('/api/chat', chatRoutes);
 
 
 // Root Welcome Endpoint

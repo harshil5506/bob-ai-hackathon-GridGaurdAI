@@ -2,12 +2,13 @@ import React from 'react';
 import './RiskBadge.css';
 
 interface RiskBadgeProps {
-  level: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL';
+  level: 'LOW' | 'MEDIUM' | 'HIGH' | 'CRITICAL' | 'low' | 'medium' | 'high' | 'critical';
 }
 
 export const RiskBadge: React.FC<RiskBadgeProps> = ({ level }) => {
+  const upper = level ? level.toUpperCase() : 'LOW';
   const getBadgeClass = () => {
-    switch (level) {
+    switch (upper) {
       case 'CRITICAL': return 'badge-critical';
       case 'HIGH': return 'badge-high';
       case 'MEDIUM': return 'badge-medium';
@@ -18,7 +19,7 @@ export const RiskBadge: React.FC<RiskBadgeProps> = ({ level }) => {
 
   return (
     <span className={`risk-badge ${getBadgeClass()}`}>
-      {level}
+      {upper}
     </span>
   );
 };
