@@ -1,5 +1,1 @@
 https://gridguard-ai-chi.vercel.app/
-
-GridGuard AI — Live Deployed Production Web Application
-Backend REST API: https://backend-omega-ten-80.vercel.app
-GitHub Repository: https://github.com/harshil5506/bob-ai-hackathon-GridGaurdAI
