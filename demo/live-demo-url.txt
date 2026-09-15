@@ -1,1 +1,2 @@
-https://gridguard-ai-chi.vercel.app/
+Frontend: https://gridguard-ai-chi.vercel.app/
+Backend: https://backend-omega-ten-80.vercel.app/
